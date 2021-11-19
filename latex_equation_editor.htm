@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>LaTex Equation Editor</title>
+   <meta name="Description"
+      content="LaTex Equation Editor  - Try LaTex equation editor online alongwith MathJax, AMS, MathML." />
+   <meta name="Keywords" content="LaTex, Equation, Editor, Try, Equation, Editor, Online, MathJax, AMS, MathML." />
+   <!-- <script src="https://unpkg.com/vue@next"></script> -->
+   <script src="https://unpkg.com/vue@3.2.22/dist/vue.global.prod.js"></script>
+   <script src="/assets/jquery-easyui-1.5.21/js/jquery.min.js"></script>
+   <script src="/assets/jquery-easyui-1.5.21/js/jquery.easyui.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="themes/css/gray/easyui.css">
+   <link rel="stylesheet" type="text/css" href="themes/css/icon.css">
+
+   <!-- <script type="text/javascript">
+      MathJax = {
+         tex:{ inlineMath: [["$","$"],["\\(","\\)"]] },
+         tex: {packages: {'[+]': ['color']}}
+      };
+   </script>
+
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+
+   <script type="text/javascript" src="/assets/cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+
+   <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+      tex2jax:{ inlineMath: [["$","$"],["\\(","\\)"]] },
+      TeX: { extensions: ["color.js"] }
+   });
+   </script>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+      }
+
+      body {
+         font: 71%/1.5 Verdana, Sans-Serif;
+         background: #eee;
+      }
+
+      div#loading {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         margin-top: -50px;
+         margin-left: -50px;
+         width: 50px;
+         height: 50px;
+         z-index: 100;
+         background: url(/images/loading.gif) no-repeat;
+         background-color: transparent;
+         visibility: visible;
+      }
+
+      #ff {
+         visibility: hidden;
+      }
+
+      #center,
+      #east {
+         text-align: center;
+         font-size: 20px;
+      }
+
+      #container {
+         width: 100%;
+      }
+
+      .tabs li {
+         width: auto;
+      }
+
+      .keyboard {
+         margin: 0;
+         padding: 0;
+         list-style: none;
+      }
+
+      .keyboard li {
+         float: left;
+         margin: 0 5px 5px 0;
+         width: 35px;
+         height: 35px;
+         line-height: 35px;
+         text-align: center;
+         background: #eee;
+         border: 1px solid #f9f9f9;
+         -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+      }
+
+      .keyboard .tab {
+         width: 65px;
+      }
+
+      .keyboard .colorstrip {
+         width: 77px;
+         height: 20px;
+         font-size: 14px;
+         line-height: 0px;
+      }
+
+      .keyboard .small {
+         font-size: 10px !important;
+      }
+
+      .keyboard .medium {
+         font-size: 13px !important;
+         width: 112px;
+      }
+
+      .keyboard .bigtab {
+         width: 175px;
+         font-size: 17px;
+         height: 60px;
+         text-align: center;
+         vertical-align: middle;
+      }
+
+      .keyboard li:hover {
+         position: relative;
+         top: 1px;
+         left: 1px;
+         border-color: #e5e5e5;
+         cursor: pointer;
+      }
+
+      ul li {
+         font-size: 20px;
+         padding: 10px;
+         border: 1px solid #aaa;
+         width: 25px;
+         height25px;
+         texta-align: center;
+         list-style: none;
+         float: left;
+      }
+
+      #code {
+         position: absolute;
+         top: 32px;
+         right: 0px;
+         bottom: 2px;
+         left: 0px;
+         margin-bottom: 0px !important;
+      }
+
+      .main-title {
+         border-left: 1px solid #ccc;
+         height: 17px;
+         color: #000;
+         font-size: 100%;
+         float: left;
+         margin: 16px 5px 0px 5px;
+         padding: 6px 0px 0px 5px;
+         text-transform: uppercase;
+         font-weight: bold;
+         letter-spacing: 4px;
+      }
+
+      #east a img:hover {
+         opacity: 0.7;
+      }
+
+      #east a img {
+         padding-top: 10px;
+         padding-left: 10px;
+         width: 80px !important;
+         height: 60px !important;
+      }
+   </style>
+</head>
+
+<body class="easyui-layout" id="cc">
+   <div id="loading"></div>
+   <form id="ff">
+      <iframe id="download" style="display:hidden"></iframe>
+      <div data-options="region:'north'"
+         style="height:65px; width:100%;overflow:hidden;background:url(/codingground/images/top_bg.png);">
+         <h1 class="main-title">${\color[RGB]{75,0,130} \Huge \mathbb{Latex\:Equation\:Editor}}$</h1>
+         <div class="easyui-panel,border:false,doSize:false" style="margin:18px 0px 0px 0px; float:right;">
+            <!-- <a id="help" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help', plain:true" style="float:right">Help</a> -->
+            <!-- <a id="tutorials" target="_blank" href="http://www.tutorialspoint.com/tutorialslibrary.htm" class="easyui-linkbutton" data-options="iconCls:'icon-library', plain:true" style="float:right; position:relative; top:-1px;">Tutorials</a> -->
+            <a id="view" href="#" class="easyui-menubutton" data-options="menu:'#mm3',iconCls:'icon-view'"
+               style="float:right">View</a>
+            <a id="edit" href="#" class="easyui-menubutton" data-options="menu:'#mm2',iconCls:'icon-edit'"
+               style="float:right">Edit</a>
+            <!-- <a href="online_dev_tools.htm" class="easyui-linkbutton l-btn l-btn-small l-btn-plain"
+               data-options="plain:true, iconCls:'icon-tools'" style="float:right">Dev Tools</a> -->
+         </div>
+         <div id="mm2" style="width:200px;">
+            <div id="undo" data-options="iconCls:'icon-undo'">Undo</div>
+            <div id="redo" data-options="iconCls:'icon-redo'">Redo</div>
+            <div class="menu-sep"></div>
+            <div id="cut" data-options="iconCls:'icon-cut'">Cut</div>
+            <div id="copy" data-options="iconCls:'icon-copy'">Copy</div>
+            <div id="paste" data-options="iconCls:'icon-paste'">Paste</div>
+            <div id="delete" data-options="iconCls:'icon-delete'">Delete</div>
+            <div id="select" data-options="iconCls:'icon-select'">Select All</div>
+            <div class="menu-sep"></div>
+            <div id="find" data-options="iconCls:'icon-find'">Find</div>
+            <div id="findreplace" data-options="iconCls:'icon-replace'">Find and Replace</div>
+         </div>
+         <div id="mm3" style="width:200px;">
+            <div id="editor-theme" data-options="iconCls:'icon-editor-theme'"><span>Editor Theme</span>
+               <div>
+                  <div onclick="setEditorTheme('chrome');">Chrome</div>
+                  <div onclick="setEditorTheme('crimson_editor');">Crimson Editor</div>
+                  <div onclick="setEditorTheme('dreamweaver');">Dreamweaver</div>
+                  <div onclick="setEditorTheme('eclipse');">Eclipse</div>
+                  <div onclick="setEditorTheme('github');">Github</div>
+                  <div onclick="setEditorTheme('kuroir');">Kuroir</div>
+                  <div onclick="setEditorTheme('solarized_light');">Solarized Light</div>
+                  <div onclick="setEditorTheme('solarized_dark');">Solarized Dark</div>
+                  <div onclick="setEditorTheme('xcode');">XCode</div>
+                  <div onclick="setEditorTheme('ambiance');">Ambiance</div>
+                  <div onclick="setEditorTheme('cobalt');">Cobalt</div>
+                  <div onclick="setEditorTheme('idle_fingers');">idle Fingers</div>
+                  <div onclick="setEditorTheme('kr_theme');">krTheme</div>
+                  <div onclick="setEditorTheme('mono_industrial');">Mono Industrial</div>
+                  <div onclick="setEditorTheme('monokai');">Monokai</div>
+                  <div onclick="setEditorTheme('terminal');">Terminal</div>
+                  <div onclick="setEditorTheme('textmate');">Textmate</div>
+                  <div onclick="setEditorTheme('tomorrow');">Tomorrow</div>
+                  <div onclick="setEditorTheme('twilight');">Twilight</div>
+                  <div onclick="setEditorTheme('vibrant_ink');">Vibrant Ink</div>
+               </div>
+            </div>
+            <div id="font-size" data-options="iconCls:'icon-font-size'"><span>Font Size</span>
+               <div>
+                  <div onclick="setEditorFontSize('8');">8px</div>
+                  <div onclick="setEditorFontSize('9');">9px</div>
+                  <div onclick="setEditorFontSize('10');">10px</div>
+                  <div onclick="setEditorFontSize('11');">11px</div>
+                  <div onclick="setEditorFontSize('12');">12px</div>
+                  <div onclick="setEditorFontSize('13');">13px</div>
+                  <div onclick="setEditorFontSize('14');">14px</div>
+                  <div onclick="setEditorFontSize('15');">15px</div>
+                  <div onclick="setEditorFontSize('16');">16px</div>
+                  <div onclick="setEditorFontSize('17');">17px</div>
+                  <div onclick="setEditorFontSize('18');">18px</div>
+                  <div onclick="setEditorFontSize('20');">20px</div>
+                  <div onclick="setEditorFontSize('22');">22px</div>
+                  <div onclick="setEditorFontSize('24');">24px</div>
+               </div>
+            </div>
+            <div id="tab-size" data-options="iconCls:'icon-tab-size'"><span>Tab Size</span>
+               <div>
+                  <div onclick="setEditorTabSize('1');">1</div>
+                  <div onclick="setEditorTabSize('2');">2</div>
+                  <div onclick="setEditorTabSize('3');">3</div>
+                  <div onclick="setEditorTabSize('4');">4</div>
+                  <div onclick="setEditorTabSize('5');">5</div>
+                  <div onclick="setEditorTabSize('6');">6</div>
+                  <div onclick="setEditorTabSize('7');">7</div>
+                  <div onclick="setEditorTabSize('8');">8</div>
+               </div>
+            </div>
+            <div id="soft-wrap" data-options="iconCls:'icon-soft-wrap'"><span>Soft Wrap</span>
+               <div>
+                  <div onclick="setEditorSoftWrap('true');">On</div>
+                  <div onclick="setEditorSoftWrap('false');">Off</div>
+                  <div onclick="setEditorSoftWrap('40');">40 Chars</div>
+                  <div onclick="setEditorSoftWrap('60');">60 Chars</div>
+                  <div onclick="setEditorSoftWrap('80');">80 Chars</div>
+                  <div onclick="setEditorSoftWrap('100');">100 Chars</div>
+                  <div onclick="setEditorSoftWrap('120');">120 Chars</div>
+                  <div onclick="setEditorSoftWrap('140');">140 Chars</div>
+               </div>
+            </div>
+            <div class="menu-sep"></div>
+            <div onclick="setEditorInvisible(true);" data-options="iconCls:'icon-show-invisible'">Show Invisible</div>
+            <div onclick="setEditorInvisible(false);" data-options="iconCls:'icon-hide-invisible'">Hide Invisible</div>
+            <div class="menu-sep"></div>
+            <div onclick="setEditorGutter(true);" data-options="iconCls:'icon-show-gutter'">Show Gutter</div>
+            <div onclick="setEditorGutter(false);" data-options="iconCls:'icon-hide-gutter'">Hide Gutter</div>
+         </div>
+      </div>
+      <!--HEADER ENDS -->
+      <div id="east"
+         data-options="region:'east',iconCls:'icon-terminal', title:'Result', split:true, tools:'#result-tools',toolPosition:'right'"
+         style="width:50%; border-left:5px solid #eee; padding:0px;overflow:hidden; background:#fff;">
+      </div>
+      <div id="result-tools">
+         <a href="#" class="easyui-menubutton" data-options="menu:'#dwmenu', iconCls:'icon-download-file'"
+            style="position:relative;top:-5px;width:120px;white-space:nowrap;">Download</a>
+      </div>
+      <div id="dwmenu" style="width:100px;">
+         <div data-options="iconCls:'icon-png'" onclick="download('png')">PNG</div>
+         <div data-options="iconCls:'icon-gif'" onclick="download('gif')">GIF</div>
+         <div data-options="iconCls:'icon-jpg'" onclick="download('jpg')">JPG</div>
+         <div data-options="iconCls:'icon-pdf'" onclick="download('pdf')">PDF</div>
+         <div data-options="iconCls:'icon-svg'" onclick="download('svg')">SVG</div>
+      </div>
+      <div id="south" data-options="region:'south'" style="height:250px;border-top:0px;">
+         <!--FOOTER STARTS -->
+         <div id="container" style="height:100%;">
+            <div class="easyui-tabs" data-options="tabPosition:'top',fit:true">
+               <div title="Basic" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="letter" style="font-size:10px;" v-on:click="()=>this.insert('\\:')">Space</li>
+                     <li class="letter" style="font-size:10px;" v-on:click="()=>this.insert('\\quad')">Quad</li>
+                     <li class="letter" style="font-size:10px;" v-on:click="()=>this.insert('\\\\')">Enter</li>
+
+                     <li class="letter" v-for="item in basic" v-on:click="()=>insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Maths" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="tab" v-for="item in maths" v-on:click="()=>this.insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Formula" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="bigtab" :class="get_class(item)" v-for="item in formula" v-on:click="()=>insert(item)">
+                        ${{latex(item)}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Arrows" style="padding:10px;">
+                  <ul class="keyboard">
+                     <li class="letter" v-for="item in arrows" v-on:click="()=>insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Alphabets" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="letter" :class="get_class(item)" v-for="item in alphabets" v-on:click="()=>insert(item)">
+                        ${{latex(item)}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Symbols" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="letter" v-for="item in symbols" v-on:click="()=>insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Operators" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="letter" v-for="item in operators" v-on:click="()=>insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Functions" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="letter small" v-for="item in functions" v-on:click="()=>insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Fonts" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="tab medium" v-for="item in fonts" v-on:click="()=>this.insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+               <div title="Colors" style="padding:10px">
+                  <ul class="keyboard">
+                     <li class="colorstrip" v-for="item in colors" v-on:click="()=>insert(item)">
+                        ${{item}}$
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+      <!--FOOTER ENDS -->
+      <div data-options="region:'center'" style="padding:0px;" id="left">
+         <!-- LEFT STARTS -->
+         <div data-options="fit:true, border:false,tools:'#tab-tools',toolPosition:'left'" id="codebox"
+            class="easyui-tabs">
+            <div title="LaTex Code" style="padding:0px;">
+               <pre id="code" style="width:100%; height:98%;"></pre>
+            </div>
+         </div>
+      </div>
+      <div id="tab-tools" style="border-top:0px; border-right:0px;">
+         <a href="javascript:void(0)" id="clear" class="easyui-linkbutton"
+            data-options="plain:true,iconCls:'icon-execute-project'" style="white-space:nowrap;"><b>Clear</b></a>
+         <a href="javascript:void(0)" id="separator" class="easyui-linkbutton" data-options="plain:true"
+            style="white-space:nowrap;"><b>|</b></a>
+      </div>
+      <!--CODE AREA STARTS -->
+   </form>
+
+   <script src="/codingground/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+   <script src="/themes/js/latex-min.js" type="text/javascript" charset="utf-8"></script>
+   <script type="text/javascript">
+      Vue.createApp({
+         async created() {
+            const res = await fetch("/list_latexs.json");
+            Object.assign(this, await res.json());
+         },
+         data() {
+            return {
+               basic: null,
+               colors: null,
+               maths: null,
+               formula: null,
+               arrows: null,
+               alphabets: null,
+               symbols: null,
+               operators: null,
+               functions: null,
+               fonts: null,
+               colors: null
+            }
+         },
+         methods: {
+            insert(latex) {
+               latex = typeof(latex) === "string" ? latex : latex.latex;
+               edit.selection.getCursor();
+               edit.insert(latex);
+            },
+            latex(item) {
+               if (typeof(item) =="string") {
+                  return item
+               }
+               return item.latex
+            },
+            get_class(item) {
+               if (typeof(item) =="string") {
+                  return undefined
+               }
+               return item.class
+            }
+         }
+      }).mount('#container');
+   </script>
+</body>
+
+</html>
