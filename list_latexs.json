@@ -126,6 +126,7 @@
         "f(x)=\\frac{P(x)}{Q(x)}",
         "\\frac{1+\\frac{a}{b}}{1+\\frac{1}{1+\\frac{1}{a}}}",
         "\\sum_{\\substack{0\\le i\\le m\\\\ 0\\lt j\\lt n}} P(i,j)",
+        {"latex":"\\left[\\begin{array}{c|c}\\begin{matrix}x&2y&z\\\\3x&7y&2z\\\\2x&2y&z\\end{matrix}&\\begin{matrix}8\\\\23\\\\9\\end{matrix}\\end{array}\\right]", "class": { "small": true}},
         { "latex": "\\left\\{\\begin{array}{cl} {a_{11}x_1+a_{12}x_2+\\cdots+a_{1n}x_n=b_1}\\\\\\vdots \\\\{a_{21}x_1+a_{22}x_2+\\cdots+a_{2n}x_n=b_1}\\end{array}\\right.", "class": { "small": true}},
         {"latex": "\\lim_{x \\to \\infty} \\exp(-x) = 0", "class": { "medium": true }},
         {"latex": "\\cos (2\\theta) = \\cos^2 \\theta - \\sin^2 \\theta", "class": { "medium": true }}

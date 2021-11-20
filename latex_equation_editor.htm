@@ -302,9 +302,9 @@
             <div class="easyui-tabs" data-options="tabPosition:'top',fit:true">
                <div title="Basic" style="padding:10px">
                   <ul class="keyboard">
-                     <li class="letter" style="font-size:10px;" v-on:click="()=>this.insert('\\:')">Space</li>
-                     <li class="letter" style="font-size:10px;" v-on:click="()=>this.insert('\\quad')">Quad</li>
-                     <li class="letter" style="font-size:10px;" v-on:click="()=>this.insert('\\\\')">Enter</li>
+                     <li class="letter" style="font-size:10px;" v-on:click="()=>insert('\\:')">Space</li>
+                     <li class="letter" style="font-size:10px;" v-on:click="()=>insert('\\quad')">Quad</li>
+                     <li class="letter" style="font-size:10px;" v-on:click="()=>insert('\\\\')">Enter</li>
 
                      <li class="letter" v-for="item in basic" v-on:click="()=>insert(item)">
                         ${{item}}$
@@ -313,7 +313,7 @@
                </div>
                <div title="Maths" style="padding:10px">
                   <ul class="keyboard">
-                     <li class="tab" v-for="item in maths" v-on:click="()=>this.insert(item)">
+                     <li class="tab" v-for="item in maths" v-on:click="()=>insert(item)">
                         ${{item}}$
                      </li>
                   </ul>
@@ -401,9 +401,12 @@
    <script src="/themes/js/latex-min.js" type="text/javascript" charset="utf-8"></script>
    <script type="text/javascript">
       Vue.createApp({
-         async created() {
+         async beforeCreate() {
             const res = await fetch("/list_latexs.json");
             Object.assign(this, await res.json());
+         },
+         updated() {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "container"])
          },
          data() {
             return {
