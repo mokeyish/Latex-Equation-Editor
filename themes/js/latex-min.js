@@ -35,7 +35,7 @@ editor.on("change", function() {
     var a = editor.getValue();
     0 >= a.length && ($result.html(""), result);
     $result.html("$" + a + "$");
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "east"])
+    MathJax.typeset(document.querySelectorAll("#east"));
 });
 $("#undo").click(function() {
     editor.getSession().getUndoManager().hasUndo() && editor.getSession().getUndoManager().undo(!1)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
    <title>LaTex Equation Editor</title>
@@ -13,24 +13,21 @@
    <link rel="stylesheet" type="text/css" href="themes/css/gray/easyui.css">
    <link rel="stylesheet" type="text/css" href="themes/css/icon.css">
 
-   <!-- <script type="text/javascript">
+   <script type="text/javascript">
       MathJax = {
-         tex:{ inlineMath: [["$","$"],["\\(","\\)"]] },
-         tex: {packages: {'[+]': ['color']}}
+         loader: {load: ['ui/lazy']},
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
       };
    </script>
 
    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-   <script type="text/javascript" src="/assets/cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
-
-   <script type="text/x-mathjax-config">
-   MathJax.Hub.Config({
-      tex2jax:{ inlineMath: [["$","$"],["\\(","\\)"]] },
-      TeX: { extensions: ["color.js"] }
-   });
-   </script>
    <style>
       * {
          margin: 0;
@@ -185,12 +182,22 @@
          <div class="easyui-panel,border:false,doSize:false" style="margin:18px 0px 0px 0px; float:right;">
             <!-- <a id="help" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help', plain:true" style="float:right">Help</a> -->
             <!-- <a id="tutorials" target="_blank" href="http://www.tutorialspoint.com/tutorialslibrary.htm" class="easyui-linkbutton" data-options="iconCls:'icon-library', plain:true" style="float:right; position:relative; top:-1px;">Tutorials</a> -->
+            
+            <a href="https://github.com/mokeyish/Latex-Equation-Editor" style="float:right; position:relative; top:-1px;" target="_blank" rel="noopener noreferrer" data-options="plain:true" class="easyui-linkbutton l-btn l-btn-small l-btn-plain">
+               <span>Code<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_3J9K"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></span></a>
+
+            <a id="tutorials" href="#" class="easyui-menubutton" data-options="menu:'#mm4',iconCls:'icon-library'"
+               class="easyui-linkbutton" style="float:right; position:relative; top:-1px;">Tutorials</a>
+
             <a id="view" href="#" class="easyui-menubutton" data-options="menu:'#mm3',iconCls:'icon-view'"
                style="float:right">View</a>
+
             <a id="edit" href="#" class="easyui-menubutton" data-options="menu:'#mm2',iconCls:'icon-edit'"
                style="float:right">Edit</a>
-            <!-- <a href="online_dev_tools.htm" class="easyui-linkbutton l-btn l-btn-small l-btn-plain"
-               data-options="plain:true, iconCls:'icon-tools'" style="float:right">Dev Tools</a> -->
+               
+            <a href="https://www.tutorialspoint.com/online_dev_tools.htm" target="_blank" class="easyui-linkbutton l-btn l-btn-small l-btn-plain"
+               data-options="plain:true, iconCls:'icon-tools'" style="float:right">Dev Tools</a>
+
          </div>
          <div id="mm2" style="width:200px;">
             <div id="undo" data-options="iconCls:'icon-undo'">Undo</div>
@@ -279,11 +286,19 @@
             <div onclick="setEditorGutter(true);" data-options="iconCls:'icon-show-gutter'">Show Gutter</div>
             <div onclick="setEditorGutter(false);" data-options="iconCls:'icon-hide-gutter'">Hide Gutter</div>
          </div>
+         <div id="mm4" style="width:200px;">
+            <div>
+               <a target="_blank" href="https://www.tutorialspoint.com/tex_commands/index.htm">Learn tex commands</a>
+            </div>
+            <div>
+               <a target="_blank" href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">Wiki：LaTeX/Mathematics</a>
+            </div>
+         </div>
       </div>
       <!--HEADER ENDS -->
       <div id="east"
          data-options="region:'east',iconCls:'icon-terminal', title:'Result', split:true, tools:'#result-tools',toolPosition:'right'"
-         style="width:50%; border-left:5px solid #eee; padding:0px;overflow:hidden; background:#fff;">
+         style="width:50%; border-left:5px solid #eee; padding:20px;overflow:hidden; background:#fff;">
       </div>
       <div id="result-tools">
          <a href="#" class="easyui-menubutton" data-options="menu:'#dwmenu', iconCls:'icon-download-file'"
@@ -405,9 +420,6 @@
             const res = await fetch("/list_latexs.json");
             Object.assign(this, await res.json());
          },
-         updated() {
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "container"])
-         },
          data() {
             return {
                basic: null,
@@ -440,6 +452,11 @@
                   return undefined
                }
                return item.class
+            }
+         },
+         updated() {
+            if (MathJax.typeset) {
+               MathJax.typeset(document.querySelectorAll("#container"));
             }
          }
       }).mount('#container');
