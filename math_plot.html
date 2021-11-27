@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Math Plot</title>
+    <meta name="Description"
+        content="Math Plot" />
+    <meta name="Keywords" content="LaTex, Plot, Online." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+</head>
+<body style="position: absolute;top: 0; bottom: 0; left: 0; right: 0;">
+
+    <div id="calculator" style="width: 100%;height: 100%;" ></div>
+
+    <script>
+        var latexs = document.location.search != null && document.location.search.length > 1  ? decodeURI(document.location.search).substr(1).split(";") : null;
+        console.log(latexs);
+
+        show_expressions = latexs === null
+
+        var elt = document.getElementById('calculator');
+        var calculator = Desmos.GraphingCalculator(elt, {
+            autosize: true,
+            expressions: show_expressions,
+            graphpaper: true,
+            border: false
+        });
+        
+        if (latexs && latexs.length > 0) {
+            calculator.setExpressions(latexs.map((latex, i) => ({ id: i, latex: latex })));
+        }
+
+      </script>
+
+</body>
+
+</html>
