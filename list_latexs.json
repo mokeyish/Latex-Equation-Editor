@@ -599,7 +599,8 @@
         "\\mathfrak{Fraktur}",
         "\\mathbb{Blackboard}",
         "\\mathsf{Sans Serif}",
-        "\\mathtt{Typewriter}"
+        "\\mathtt{Typewriter}",
+        "\\texttt{\"Typewriter\"}"
     ],
     "colors": [ 
         "{\\color{aqua} Aqua}",
