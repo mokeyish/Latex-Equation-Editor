@@ -110,6 +110,7 @@
         "\\begin{cases}a & x = 0\\\\b & x > 0\\end{cases}",
         "\\sqrt{\\frac{n}{n-1} S}",
         "\\begin{pmatrix} \\alpha& \\beta^{*}\\\\ \\gamma^{*}& \\delta \\end{pmatrix}",
+        "\\begin{matrix} \\alpha& \\beta^{*}\\\\ \\gamma^{*}& \\delta \\end{matrix}",
         "A\\:\\xleftarrow{n+\\mu-1}\\:B",
         "B\\:\\xrightarrow[T]{n\\pm i-1}\\:C",
         "\\frac{1}{k}\\log_2 c(f)\\;",
