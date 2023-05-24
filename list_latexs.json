@@ -99,7 +99,8 @@
         "\\frac{ab}{cd}",
         "\\frac{\\partial a}{\\partial b}",
         "\\frac{\\text{d}x}{\\text{d}y}",
-        "\\lim_{a \\rightarrow b}"
+        "\\lim_{a \\rightarrow b}",
+        "\\nabla"
     ],
     "formula": [
         "\\displaystyle\\sum\\limits_{i=0}^n i^3",
